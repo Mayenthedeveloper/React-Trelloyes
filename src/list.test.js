@@ -25,7 +25,7 @@ it('renders the UI as expected', () => {
     const tree = renderer
     .create(<list
        title = 'test'
-       content = 'test'
+       content ='test'
        key = 'test'
        /> )
        .toJSON();
