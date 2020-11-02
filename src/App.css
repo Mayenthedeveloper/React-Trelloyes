@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /* APP STYLES */
 .App {
   min-height: calc(100vh - 16px);
@@ -18,3 +19,19 @@
 .App-list {
   display: flex;
 }
+=======
+.App{
+    display: flex;
+    margin: 40px;
+    min-height:  calc(100vh -80px);
+}
+.left {
+    background-color: darkslategray;
+    color: azure;
+  }
+  
+  .right {
+    background-color: wheat;
+    color: firebrick;
+  }
+>>>>>>> 1ef8d2c90d365cd1ca2b1c2967ca362a1ae697f8

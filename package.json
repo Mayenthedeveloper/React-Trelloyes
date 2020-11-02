@@ -1,5 +1,9 @@
 {
+<<<<<<< HEAD
   "name": "trelloyes",
+=======
+  "name": "react-playground",
+>>>>>>> 1ef8d2c90d365cd1ca2b1c2967ca362a1ae697f8
   "version": "0.1.0",
   "private": true,
   "dependencies": {
