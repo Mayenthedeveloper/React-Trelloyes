@@ -1,96 +1,103 @@
-<<<<<<< HEAD
-
 import React, { Component } from 'react';
 import List from './List'
+import STORE from './STORE'
 import './App.css';
 
+const newRandomCard = () => {
+  const id = Math.random().toString(36).substring(2, 4)
+    + Math.random().toString(36).substring(2, 4);
+  return {
+    id,
+    title: `Random Card ${id}`,
+    content: 'lorem ipsum',
+  }
+}
 
-class App extends Component  {
-  static defaultProps = {
-    store: {
-      lists:[],
-      allCards:{},
-    }
+function omit(obj, keyToOmit) {
+  return Object.entries(obj).reduce(
+    (newObj, [key, value]) =>
+        key === keyToOmit ? newObj : {...newObj, [key]: value},
+    {}
+  );
+}
+
+
+class App extends Component {
+  // static defaultProps = {
+  //   store: {
+  //     lists: [],
+  //     allCards: {},
+  //   }
+
+  state = {
+    store:  STORE,
   };
 
-  render(){
-    const { store } = this.props
-    return(
-      <main className = 'App'>
-        <header className ='App-header'>
+  handleDeleteCard = (cardId) => {
+    const {lists, allCards} = this.state.store;
+
+    const NewLists = lists.map(list =>({
+      ...list,
+      cardIds: list.cardIds.filter(id => id !==cardId)
+    }));
+
+    const newCards =omit(allCards, cardId);
+
+    this.setState({
+      store: {
+        lists: NewLists,
+        allCards: newCards
+      }
+    })
+  };
+
+  handleAddCard =(listId) => {
+    const newCard = newRandomCard()
+    const newLists = this.store.lists.map(list => {
+      if(list.id === listId){
+        return{
+          ...list, 
+          cardIds:[...list.cardId, newCard.id]
+        }
+      }
+      return list;
+    })
+
+    this.setState({
+      store:{
+        list: newLists,
+        allCards: {
+          ...this.state.store.allcards,
+          [newCard.id]: newCard
+        }
+      }
+    })
+  };
+
+
+
+  render() {
+    const { store } = this.state
+    return (
+      <main className='App'>
+        <header className='App-header'>
           <h1>Trelloyes!</h1>
         </header>
         <div className='App-list'>
           {store.lists.map(list => (
             <List
-            key ={list.id}
-            header= {list.header}
-            cards={list.cardIds.map(id => store.allCards[id])}
+              key={list.id}
+              id={list.id}
+              header={list.header}
+              cards={list.cardIds.map(id => store.allCards[id])}
+              onClickDelete={this.handleDeleteCard}
+              onClickAdd={this.handleAddCard}
             />
-            ))}
+          ))}
         </div>
       </main>
     );
   }
 }
 
-
 export default App;
-=======
-// import React from 'react';
-// import Split from './composition/Split';
-// import './App.css';
-// import Tooltip from './composition/Tooltip';
-
-// // make 2 tooltips here and another inside the App directly
-// const firstTooltip = (
-//   <Tooltip color='hotpink' message='tooltip message'>
-//    ipsum
-//   </Tooltip>
-// )
-// const secondTooltip = (
-//   <Tooltip color='#126BCC' message='another tooltip message'>
-//     officiis
-//   </Tooltip>
-// )
-
-// function App() {
-//   return (
-//     <main className='App'>
-//       <Split className='left' flexBasis='2'>
-//         This is the content for the left Split. Lorem {firstTooltip} dolor sit amet consectetur, adipisicing elit. Incidunt ex velit suscipit facere officia?<br />
-//         {/* make another tooltip directly inside the App */}
-//         <Tooltip message='one more tooltip message'>
-//           Necessitatibus?
-//         </Tooltip>
-//       </Split>
-//       <Split className='right'>
-//         This is the content for the right Split. Inventore aliquid cupiditate suscipit repellat. Quaerat quis {secondTooltip} quam fuga. Aliquid quo possimus id soluta aspernatur.
-//       </Split>
-//     </main>
-//   )
-// }
-
-// export default App
-
-
-import React, { Component } from 'react';
-import './App.css';
-import Messages from './Messages';
-
-class App extends Component {
-  render(){
-    return(
-      <div className='App'>
-        <h1> My Name is Mayen Akpan!</h1>
-        <Messages name ="Messages" unread={0}/>
-        <Messages name ="Notifications" unread ={10}/>
-    
-      </div>
-      
-    )
-  }
-}
-
-export default App;
->>>>>>> 1ef8d2c90d365cd1ca2b1c2967ca362a1ae697f8
